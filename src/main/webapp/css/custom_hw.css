@@ -1,0 +1,81 @@
+html,body
+{
+    height:100%;
+}
+
+.masthead{
+    background: url("../img/banner.jpg") no-repeat center center scroll;
+    background-size: cover;
+    text-align: center;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-position-x: center;
+    background-position-y: center;
+    display: block;
+}
+
+.empty{
+    min-height: 4rem;
+}
+
+.overlay{
+    background-color: rgba(0, 0, 0, 0.5);
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+}
+
+.center {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.header-search{
+    position: center;
+    padding: 20rem 0;
+    text-align: center;
+}
+
+.text{
+    text-transform: uppercase;
+    font-family: "Roboto",Helvetica,Arial,sans-serif;
+}
+
+.text-white {
+    color:#fff!important
+}
+
+.title{
+    text-align: center;
+    color: #1f2f02;
+}
+
+.text-plain{
+    font-family: "Roboto",Helvetica,Arial,sans-serif;
+    color: rgba(29, 21, 12, 0.85);
+    text-align: justify;
+}
+
+.car_img{
+    display: block;
+    margin: auto auto;
+    height: 200px;
+    width: 256px;
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+}
+
+.car_item{
+    margin-bottom: 30px;
+}
+
+.justify-content-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+}
+
+.wrap {
+    min-height: 100%;
+}
