@@ -17,8 +17,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class Search implements Command, SessionContext {
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        TermDateBuilder dateBuilder = new TermDateBuilder(request);
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        /*TermDateBuilder dateBuilder = new TermDateBuilder();
+        dateBuilder.setPickUp(request.getParameter("pickUp"));
         TermDate term = dateBuilder.getTermDate();
         if(term != null){
             RentalService service = RentalService.getInstance();
@@ -28,8 +29,8 @@ public class Search implements Command, SessionContext {
                 request.setAttribute("days", term.getDaysCount());
                 System.out.println(term.getDaysCount());
                 String view = "/jsp/rental/cars.jsp";
-                RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-                dispatcher.forward(request, response);
+                //RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+                //dispatcher.forward(request, response);
             }
             setError(request, ErrorMessage.ERROR_NO_CARS);
             //request.getSession().setAttribute("error", "No cars available. Try another dates");
@@ -38,5 +39,7 @@ public class Search implements Command, SessionContext {
            // request.getSession().setAttribute("error", "Please, input valid dates!");
         }
         new Index().execute(request, response);
+        */
+        return  "/jsp/index.jsp";
     }
 }

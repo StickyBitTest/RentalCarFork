@@ -20,8 +20,8 @@ public class Signup implements Command, LocalRedirect, SessionContext {
 
     private static final Logger log = Logger.getLogger(Signup.class);
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserBuilder builder = new UserBuilder();
+    public String execute(HttpServletRequest request, HttpServletResponse response)  {
+        /*UserBuilder builder = new UserBuilder();
         Account account = null;
         try {
             account = builder.getAccount();
@@ -37,6 +37,7 @@ public class Signup implements Command, LocalRedirect, SessionContext {
                 setError(request, ErrorMessage.ERROR_USER_EXISTS);
                 //request.getSession().setAttribute("error", "User already exists");
             }
-        response.sendRedirect(formUrl(request));
+        response.sendRedirect(formUrl(request));*/
+        return  "/jsp/index.jsp";
     }
 }

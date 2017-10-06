@@ -8,6 +8,7 @@ import com.rentalcar.controllers.command.admin.Orders;
 import com.rentalcar.controllers.command.admin.UpdateOrder;
 import com.rentalcar.controllers.command.rental.RentCar;
 import com.rentalcar.controllers.command.rental.Search;
+import com.rentalcar.controllers.services.AccountService;
 
 import java.util.HashMap;
 
@@ -16,9 +17,29 @@ import java.util.HashMap;
  */
 public class CommandFactory {
 
-    private static HashMap<String, Command> commands = new HashMap();
+    private HashMap<String, Command> commands;
 
-    static {
+    private static class SingletonHolder{
+        private static CommandFactory instance = new CommandFactory();
+    }
+
+    private CommandFactory(){
+        commands = new HashMap();
+        initCommandPool();
+    }
+
+    public static CommandFactory getInstance() {
+        return SingletonHolder.instance;
+    }
+
+    public Command getCommand(String commandName){
+        Command command = commands.get(commandName);
+        if (command == null)
+            return commands.get("Error");
+        return command;
+    }
+
+    private void initCommandPool(){
         commands.put("", new Index());
         commands.put("Error", new Error());
 
@@ -35,14 +56,5 @@ public class CommandFactory {
 
         commands.put("Language", new Language());
 
-    }
-
-
-    public static Command getCommand(String commandName){
-        System.out.println(commandName);
-        Command command = commands.get(commandName);
-        if (command == null)
-            return commands.get("Error");
-        return command;
     }
 }

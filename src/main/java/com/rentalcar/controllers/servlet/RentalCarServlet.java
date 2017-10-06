@@ -23,9 +23,11 @@ public class RentalCarServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getPathInfo().substring(1);
-        Command command = CommandFactory.getCommand(commandName);
-        command.execute(request, response);
+        String commandName = request.getParameter("command");
+        Command command = CommandFactory.getInstance().getCommand(commandName);
+        String view = command.execute(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(view);
+        dispatcher.forward(request, response);
     }
 
 

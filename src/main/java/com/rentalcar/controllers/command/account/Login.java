@@ -18,8 +18,8 @@ public class Login implements Command, LocalRedirect, SessionContext {
 
     private final static Logger log = Logger.getLogger(Login.class);
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserBuilder builder = new UserBuilder();
+    public String  execute(HttpServletRequest request, HttpServletResponse response) {
+       /* UserBuilder builder = new UserBuilder();
         builder
                 .setLogin(request.getParameter("login"))
                 .setPassword(request.getParameter("password"));
@@ -39,7 +39,10 @@ public class Login implements Command, LocalRedirect, SessionContext {
           //  request.getSession().setAttribute("error", "Invalid username or password");
         }
         response.sendRedirect(formUrl(request));
+        */
+        return  "/jsp/index.jsp";
     }
+
 
 
 
