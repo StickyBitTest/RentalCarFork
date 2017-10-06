@@ -2,7 +2,7 @@ package com.rentalcar.dao.implementation;
 
 import com.rentalcar.dao.DAOContext;
 import com.rentalcar.dao.abstracted.AccountDAO;
-import com.rentalcar.models.Account;
+import com.rentalcar.models.user.Account;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;

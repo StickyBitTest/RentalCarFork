@@ -2,8 +2,7 @@ package com.rentalcar.controllers.command.admin;
 
 import com.rentalcar.controllers.command.Command;
 import com.rentalcar.controllers.command.Error;
-import com.rentalcar.controllers.command.Index;
-import com.rentalcar.models.Account;
+import com.rentalcar.models.user.Account;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

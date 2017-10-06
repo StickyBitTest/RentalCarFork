@@ -1,4 +1,4 @@
-<%@ page import="com.rentalcar.models.Account" %><%--
+<%@ page import="com.rentalcar.models.user.Account" %><%--
   Created by IntelliJ IDEA.
   User: yuliia
   Date: 30.09.17

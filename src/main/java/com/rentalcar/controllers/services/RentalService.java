@@ -2,8 +2,8 @@ package com.rentalcar.controllers.services;
 
 import com.rentalcar.dao.DAOFactory;
 import com.rentalcar.dao.abstracted.CarDAO;
-import com.rentalcar.models.Car;
-import com.rentalcar.models.TermDate;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.order.TermDate;
 
 import java.util.List;
 

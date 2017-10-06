@@ -1,29 +1,64 @@
 package com.rentalcar.models.builders;
 
 import com.rentalcar.controllers.utils.ErrorMessage;
-import com.rentalcar.dao.DAOFactory;
-import com.rentalcar.dao.abstracted.CarDAO;
-import com.rentalcar.models.Car;
+import com.rentalcar.models.builders.validators.CarValidator;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.car.TransmissionType;
+import com.rentalcar.models.car.VehicleType;
 
-import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
-public class CarBuilder extends AbstractBuilder {
+public class CarBuilder extends EntityBuilder implements CarValidator {
 
-    CarBuilder(HttpServletRequest request){
-        super(request);
-    }
+    private static final String DEFAULT_IMG = "default";
 
-    public Car getCar() {
-        int carId = Integer.valueOf(request.getParameter("car_id"));
-        Car car = getCarFromDB(carId);
-        if(car == null)
-            errorMessage = ErrorMessage.ERROR_INVALID_CAR_DATA;
+    private String model;
+    private String imgFileName;
+    private BigDecimal dailyPrice;
+    private TransmissionType transmissionType;
+    private VehicleType vehicleType;
+
+    public Car getCar() throws EntityBuilderException {
+        validate();
+        Car car = new Car();
+        car.setModel(model);
+        car.setImgFile(imgFileName);
+        car.setDailyPrice(dailyPrice);
+        car.setTransmission(transmissionType);
+        car.setVehicle(vehicleType);
         return car;
     }
 
-    private Car getCarFromDB(int carId) {
-        CarDAO carDAO = DAOFactory.getCarDAO();
-        return carDAO.get(carId);
+    public CarBuilder setModel(String model){
+        validate(isModelValid(model), ErrorMessage.CAR_MODEL);
+        this.model = model;
+        return this;
     }
+
+    public CarBuilder setImgURL(String fileName){
+        if(isEmpty(fileName))
+            this.imgFileName = DEFAULT_IMG;
+        return this;
+    }
+
+    public CarBuilder setDailyPrice(BigDecimal price){
+        validate(isPriceValid(price), ErrorMessage.CAR_PRICE);
+        this.dailyPrice = price;
+        return this;
+    }
+
+
+    public CarBuilder setTransmission(TransmissionType type){
+        validate(!isNull(type), ErrorMessage.CAR_TRANSMISSION);
+        this.transmissionType = type;
+        return this;
+    }
+
+    public CarBuilder setVehicle(VehicleType type){
+        validate(!isNull(type), ErrorMessage.CAR_VEHICLE);
+        this.vehicleType = type;
+        return this;
+    }
+
 }
 

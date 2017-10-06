@@ -2,8 +2,8 @@ package com.rentalcar.dao.implementation;
 
 import com.rentalcar.dao.DAOContext;
 import com.rentalcar.dao.abstracted.CarDAO;
-import com.rentalcar.models.Car;
-import com.rentalcar.models.TermDate;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.order.TermDate;
 import org.apache.log4j.Logger;
 
 import java.sql.Date;

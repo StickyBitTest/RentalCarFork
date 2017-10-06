@@ -1,36 +1,32 @@
 package com.rentalcar.models.builders;
 
 import com.rentalcar.controllers.utils.ErrorMessage;
-import com.rentalcar.models.Car;
-import com.rentalcar.models.Client;
-import com.rentalcar.models.Order;
-import com.rentalcar.models.TermDate;
+import com.rentalcar.models.builders.validators.CarValidator;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.order.OrderStatus;
+import com.rentalcar.models.user.Client;
+import com.rentalcar.models.order.Order;
+import com.rentalcar.models.order.TermDate;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
-public class OrderBuilder extends  AbstractBuilder{
+public class OrderBuilder extends EntityBuilder implements CarValidator{
 
-    public OrderBuilder(HttpServletRequest request){
-        super(request);
-    }
+    private Client client;
+    private TermDate term;
+    private Car car;
+    private BigDecimal totalPrice;
+    private OrderStatus status;
 
-    public Order getOrder() {
-        Order order = null;
-        Car car = getCar();
-        Client client = getClient();
-        TermDate term = getTermDate();
-        if(client != null && car !=null && term !=null ){
-            BigDecimal price = computePrice(term, car);
-            if(price != null) {
-                order = new Order();
-                order.setCar(car);
-                order.setClient(client);
-                order.setTerm(term);
-                order.setTotalPrice(price);
-            }
-        }
+    public Order getOrder() throws EntityBuilderException {
+        validate();
+        Order order = new Order();
+        order.setCar(car);
+        order.setClient(client);
+        order.setTerm(term);
+        order.setTotalPrice(totalPrice);
+        order.setStatus(status);
         return order;
     }
 
@@ -45,29 +41,35 @@ public class OrderBuilder extends  AbstractBuilder{
         return null;
     }
 
-    private Car getCar(){
-        CarBuilder carBuilder = new CarBuilder(request);
-        Car car = carBuilder.getCar();
-        validateObject(car, carBuilder);
-        return car;
+
+    public OrderBuilder setCar(Car car){
+        validate(!isNull(car), ErrorMessage.ORDER_CAR);
+        this.car = car;
+        return this;
     }
 
-    public Client getClient() {
-        ClientBuilder clientBuilder = new ClientBuilder(request);
-        Client client = clientBuilder.getClient();
-        validateObject(client, clientBuilder);
-        return client;
+    public OrderBuilder setTerm(TermDate date){
+        validate(!isNull(date), ErrorMessage.ORDER_DATE);
+        this.term = date;
+        return this;
     }
 
-    public TermDate getTermDate() {
-        TermDateBuilder termDateBuilder = new TermDateBuilder(request);
-        TermDate date = termDateBuilder.getTermDate();
-        validateObject(date, termDateBuilder);
-        return date;
+    public OrderBuilder setClient(Client client){
+        validate(!isNull(client), ErrorMessage.ORDER_CLIENT);
+        this.client = client;
+        return this;
     }
 
-    private void  validateObject(Object obj, AbstractBuilder builder){
-        if(obj == null)
-            errorMessage = builder.errorMessage;
+    public OrderBuilder setPrice(BigDecimal price){
+        validate(isPriceValid(price), ErrorMessage.ORDER_PRICE);
+        this.totalPrice = price;
+        return this;
     }
+
+    public OrderBuilder setStatus(OrderStatus status){
+        validate(!isNull(status), ErrorMessage.ORDER_STATUS);
+        this.status = status;
+        return this;
+    }
+
 }

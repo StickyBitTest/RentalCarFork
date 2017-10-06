@@ -2,9 +2,7 @@ package com.rentalcar.controllers.services;
 
 import com.rentalcar.dao.abstracted.AccountDAO;
 import com.rentalcar.dao.DAOFactory;
-import com.rentalcar.dao.implementation.AccountRentalDAO;
-import com.rentalcar.models.Account;
-import com.rentalcar.models.AccountAuthInfo;
+import com.rentalcar.models.user.Account;
 
 public class AccountService {
 
@@ -34,13 +32,13 @@ public class AccountService {
         Account foundAccount = accountDAO.get(account);
         if(foundAccount != null){
             account.setAdmin(foundAccount.isAdmin());
-            account.setMail(foundAccount.getMail());
+            account.setEmail(foundAccount.getEmail());
             return true;
         }
         return false;
     }
 
-    public boolean logOut(AccountAuthInfo authInfo){
+    public boolean logOut(Account account){
         return false;
     }
 }

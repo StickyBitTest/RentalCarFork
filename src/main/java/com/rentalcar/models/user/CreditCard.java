@@ -1,8 +1,10 @@
-package com.rentalcar.models;
+package com.rentalcar.models.user;
+
+import com.rentalcar.models.Entity;
 
 import java.util.Date;
 
-public class CreditCard {
+public class CreditCard extends Entity {
 
     private String number;
     private Date expires;

@@ -1,21 +1,16 @@
-package com.rentalcar.models;
+package com.rentalcar.models.car;
+
+import com.rentalcar.models.Entity;
 
 import java.math.BigDecimal;
 
-public class Car {
+public class Car extends Entity {
 
-    private int id;
     private String model;
     private String imgFile;
     private BigDecimal dailyPrice;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private VehicleType vehicleType;
+    private TransmissionType transmissionType;
 
     public String getImgFile() {
         return imgFile;
@@ -39,5 +34,21 @@ public class Car {
 
     public void setDailyPrice(BigDecimal dailyPrice) {
         this.dailyPrice = dailyPrice;
+    }
+
+    public VehicleType getVehicle() {
+        return vehicleType;
+    }
+
+    public void setVehicle(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public TransmissionType getTransmission() {
+        return transmissionType;
+    }
+
+    public void setTransmission(TransmissionType transmissionType) {
+        this.transmissionType = transmissionType;
     }
 }

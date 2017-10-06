@@ -1,9 +1,11 @@
-package com.rentalcar.models;
+package com.rentalcar.models.order;
+
+import com.rentalcar.models.Entity;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class TermDate {
+public class TermDate extends Entity{
 
     private static final double DAY_MILLIS = 1000.0 * 24.0 * 60.0 * 60.0;
     private Date pickUp;
@@ -13,12 +15,7 @@ public class TermDate {
     public TermDate(Date pickUp, Date dropOff){
         this.dropOff = dropOff;
         this.pickUp = pickUp;
-        System.out.println(dropOff);
-        System.out.println(pickUp);
-        numberOfDays = (int)( (dropOff.getTime() - pickUp.getTime()) / DAY_MILLIS);
-        System.out.println(numberOfDays);
-        if(numberOfDays <=0)
-            numberOfDays = 1;
+        setupDays();
     }
 
     public Date getPickUp() {
@@ -31,5 +28,11 @@ public class TermDate {
 
     public long getDaysCount() {
         return numberOfDays;
+    }
+
+    private void setupDays(){
+        numberOfDays = (int)( (dropOff.getTime() - pickUp.getTime()) / DAY_MILLIS);
+        if(numberOfDays <=0)
+            numberOfDays = 1;
     }
 }

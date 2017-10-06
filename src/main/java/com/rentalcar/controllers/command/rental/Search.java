@@ -5,8 +5,8 @@ import com.rentalcar.controllers.command.Index;
 import com.rentalcar.controllers.services.RentalService;
 import com.rentalcar.controllers.utils.ErrorMessage;
 import com.rentalcar.controllers.utils.SessionContext;
-import com.rentalcar.models.Car;
-import com.rentalcar.models.TermDate;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.order.TermDate;
 import com.rentalcar.models.builders.TermDateBuilder;
 
 import javax.servlet.RequestDispatcher;

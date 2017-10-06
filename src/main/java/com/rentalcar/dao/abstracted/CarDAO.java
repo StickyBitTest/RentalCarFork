@@ -1,7 +1,7 @@
 package com.rentalcar.dao.abstracted;
 
-import com.rentalcar.models.Car;
-import com.rentalcar.models.TermDate;
+import com.rentalcar.models.car.Car;
+import com.rentalcar.models.order.TermDate;
 
 import java.util.List;
 
