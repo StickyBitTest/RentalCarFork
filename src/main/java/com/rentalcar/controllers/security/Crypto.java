@@ -21,7 +21,6 @@ public class Crypto {
         try {
             MessageDigest md = MessageDigest.getInstance(algorithn);
             md.update(string.getBytes());
-            log.fine("Hashing "+ algorithn);
             return bytesToHex(md.digest());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

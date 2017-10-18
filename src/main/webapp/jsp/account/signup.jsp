@@ -11,6 +11,12 @@
             <div class="modal-body">
                 <form data-toggle="validator" id="signUpForm" action="/rental/Signup" method="post">
                     <div class="form-group has-warning">
+                        <label for="signup-full-name" class="control-label text-warning">Full Name:</label>
+                        <input class="form-control" placeholder="Full Name" minlength="1"
+                               maxlength="30" id="signup-full-name" name="full_name" required>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-warning">
                         <label for="signup-username" class="control-label text-warning">Username:</label>
                         <input class="form-control" placeholder="Username" minlength="1"
                                maxlength="30" id="signup-username" name="login" required>
@@ -33,7 +39,7 @@
                         <label for="signup-confirm" class="text-warning">Confirm password:</label>
                         <input class="form-control" placeholder="Confirm password" required
                                data-match="#password" type="password" id="signup-confirm"
-                               data-match-error="Passwords must matches!" name="confirmPassword">
+                               data-match-error="Passwords must matches!" name="confirmed_password">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">

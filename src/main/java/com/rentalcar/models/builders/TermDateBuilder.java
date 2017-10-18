@@ -1,6 +1,5 @@
 package com.rentalcar.models.builders;
 
-import com.rentalcar.controllers.utils.ErrorMessage;
 import com.rentalcar.models.builders.validators.TermDateValidator;
 import com.rentalcar.models.order.TermDate;
 import org.apache.log4j.Logger;
@@ -9,9 +8,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.rentalcar.constants.MessageWrapper.Error;
+
 public class TermDateBuilder extends EntityBuilder implements TermDateValidator{
 
     private static final Logger log = Logger.getLogger(TermDateBuilder.class);
+
+    private static final String DATE_FORMAT = "MM/dd/yyyy";
 
     private Date pickUp;
     private Date dropOff;
@@ -19,14 +22,13 @@ public class TermDateBuilder extends EntityBuilder implements TermDateValidator{
     private SimpleDateFormat dateFormat;
 
     public TermDateBuilder(){
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        dateFormat = new SimpleDateFormat(DATE_FORMAT);
     }
 
     public TermDate getTermDate() throws EntityBuilderException {
-        validate(isDatesValid(pickUp, dropOff), ErrorMessage.ERROR_INVALID_DATE);
+        validate(isDatesValid(pickUp, dropOff), Error.INVALID_DATE);
         validate();
-        TermDate termDate = new TermDate(pickUp, dropOff);
-        return termDate;
+        return new TermDate(pickUp, dropOff);
     }
 
 
@@ -41,12 +43,12 @@ public class TermDateBuilder extends EntityBuilder implements TermDateValidator{
     }
 
     private Date getDate(String dateStr){
-        validate(!isNull(dateStr), ErrorMessage.ERROR_INVALID_DATE);
+        validate(!isNull(dateStr), Error.INVALID_DATE);
         try {
-            Date date = dateFormat.parse(dateStr);
-            return date;
+            if(!isNull(dateStr))
+                return dateFormat.parse(dateStr);
         } catch (ParseException e) {
-            validate(false, ErrorMessage.ERROR_INVALID_DATE);
+            validate(false, Error.INVALID_DATE);
             log.error(e.getMessage());
         }
         return null;

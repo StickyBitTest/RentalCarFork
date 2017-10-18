@@ -3,7 +3,7 @@ package com.rentalcar.models.user;
 public class Client extends User {
 
     private String passport;
-    private CreditCard card;
+    private CreditCard creditCard;
     private Account account;
 
     public String getPassport() {
@@ -14,12 +14,12 @@ public class Client extends User {
         this.passport = passport;
     }
 
-    public CreditCard getCard() {
-        return card;
+    public void addCard(CreditCard card) {
+        this.creditCard = card;
     }
 
-    public void setCard(CreditCard card) {
-        this.card = card;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
     public Account getAccount() {
