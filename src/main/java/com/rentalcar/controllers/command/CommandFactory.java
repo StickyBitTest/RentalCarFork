@@ -3,17 +3,20 @@ package com.rentalcar.controllers.command;
 import com.rentalcar.controllers.command.account.Login;
 import com.rentalcar.controllers.command.account.Logout;
 import com.rentalcar.controllers.command.account.Signup;
-import com.rentalcar.controllers.command.admin.Cars;
-import com.rentalcar.controllers.command.admin.Orders;
-import com.rentalcar.controllers.command.admin.UpdateOrder;
-import com.rentalcar.controllers.command.rental.RentCar;
+import com.rentalcar.controllers.command.admin.AddCar;
+import com.rentalcar.controllers.command.admin.ViewOrders;
+import com.rentalcar.controllers.command.base.Error;
+import com.rentalcar.controllers.command.base.Index;
+import com.rentalcar.controllers.command.base.Language;
+import com.rentalcar.controllers.command.rental.NewOrder;
 import com.rentalcar.controllers.command.rental.Search;
-import com.rentalcar.controllers.services.AccountService;
+
+import static com.rentalcar.constants.CommandConstants.Names.*;
 
 import java.util.HashMap;
 
 /**
- *  Form commands according to http servlet request uri
+ *  Singleton command factory, which return command according to http servlet request
  */
 public class CommandFactory {
 
@@ -32,29 +35,35 @@ public class CommandFactory {
         return SingletonHolder.instance;
     }
 
-    public Command getCommand(String commandName){
-        Command command = commands.get(commandName);
-        if (command == null)
-            return commands.get("Error");
-        return command;
+    /**
+     * @param name command name
+     * @return  site command which corresponds to input parameter
+     * or error command in case of invalid name
+     */
+    public Command getCommand(String name){
+        Command command = commands.get(name.substring(1));
+        return (command == null) ? commands.get(ERROR): command;
     }
 
     private void initCommandPool(){
-        commands.put("", new Index());
-        commands.put("Error", new Error());
 
-        commands.put("Login", new Login());
-        commands.put("Logout", new Logout());
-        commands.put("Signup", new Signup());
+        /* base site commands */
+        commands.put(BASE, new Index());
+        commands.put(ERROR, new Error());
+        commands.put(LANG, new Language());
 
-        commands.put("Search", new Search());
-        commands.put("RentCar", new RentCar());
+        /* account */
+        commands.put(LOGIN, new Login());
+        commands.put(LOGOUT, new Logout());
+        commands.put(SIGN_UP, new Signup());
 
-        commands.put("Orders", new Orders());
-        commands.put("Cars", new Cars());
-        commands.put("UpdateOrder", new UpdateOrder());
+        /* user rental */
+        commands.put(FIND, new Search());
+        commands.put(RENT_CAR, new NewOrder());
 
-        commands.put("Language", new Language());
+        /* admin panel */
+        commands.put(ADD_CAR, new AddCar());
+        commands.put(SHOW_ORDERS, new ViewOrders());
 
     }
 }

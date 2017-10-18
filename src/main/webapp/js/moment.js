@@ -3268,7 +3268,7 @@ function toISOString() {
         return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
     }
     if (isFunction(Date.prototype.toISOString)) {
-        // native implementation is ~50x faster, use it when we can
+        // native mysql is ~50x faster, use it when we can
         return this.toDate().toISOString();
     }
     return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');

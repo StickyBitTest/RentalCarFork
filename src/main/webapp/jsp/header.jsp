@@ -59,12 +59,34 @@
                     </a></li>
                     <% } else {
                         if(((Account)session.getAttribute("user")).isAdmin()){ %>
-                        <li>
-                            <a class="text" href="/rental/Cars"><fmt:message key="CARS"/></a>
+
+                    <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                                <fmt:message key="CARS"/>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a>View cars</a>
+                                </li>
+                                <li>
+                                    <a  class="text" data-toggle="modal" data-target="#addCarModal">
+                                        Add car</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a class="text"><fmt:message key="ORDERS"/></a>
-                        </li>
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                            <fmt:message key="ORDERS"/>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a class="text" data-toggle="modal" href="/rental/ViewOrders">View orders</a>
+                            </li>
+                        </ul>
+                    </li>
+
 
                     <%
                         }
@@ -99,6 +121,9 @@
     <!-- Modals -->
     <%@include file="account/login.jsp"%>
     <%@include file="account/signup.jsp"%>
+    <%if(session.getAttribute("user") != null && ((Account) session.getAttribute("user")).isAdmin()){ %>
+        <%@include file="admin/AddCar.jsp"%>
+    <%}%>
 </div>
 <div id="header"></div>
 

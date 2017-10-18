@@ -1,7 +1,6 @@
 package com.rentalcar.models.builders;
 
 import com.rentalcar.controllers.security.Crypto;
-import com.rentalcar.controllers.utils.ErrorMessage;
 import com.rentalcar.models.builders.validators.UserValidator;
 import com.rentalcar.models.user.Account;
 import com.rentalcar.models.user.Client;
@@ -9,6 +8,7 @@ import com.rentalcar.models.user.CreditCard;
 
 import java.util.Date;
 
+import static com.rentalcar.constants.MessageWrapper.Error;
 
 /**
  * Builder for user entities and user attributes
@@ -44,7 +44,7 @@ public class UserBuilder extends EntityBuilder implements UserValidator {
         Client client = new Client();
         client.setPassport(passport);
         client.setAccount(getAccount());
-        client.setCard(getCreditCard());
+        client.addCard(getCreditCard());
         client.setEmail(email);
         client.setFullName(fullName);
         return client;
@@ -52,19 +52,18 @@ public class UserBuilder extends EntityBuilder implements UserValidator {
 
     public CreditCard getCreditCard() throws EntityBuilderException {
         validate();
-        CreditCard creditCard = new CreditCard(cardNumber, cardExpires, cvv2);
-        return creditCard;
+        return new CreditCard(cardNumber, cardExpires, cvv2);
     }
 
 
     public UserBuilder setLogin(String login) {
-        validate(isLoginValid(login), ErrorMessage.ERROR_LOGIN);
+        validate(isLoginValid(login), Error.LOGIN);
         this.login = login;
         return this;
     }
 
     public UserBuilder setPassword(String password) {
-        validate(isPasswordValid(password), ErrorMessage.ERROR_PASSWORD);
+        validate(isPasswordValid(password), Error.PASSWORD);
         this.password = Crypto.sha256(password);
         return this;
 
@@ -77,45 +76,45 @@ public class UserBuilder extends EntityBuilder implements UserValidator {
     
 
     public UserBuilder setPassport(String passport){
-        validate(isPassportValid(passport), ErrorMessage.ERROR_CLIENT_PASSPORT);
+        validate(isPassportValid(passport), Error.CLIENT_PASSPORT);
         this.passport = passport;
         return this;
     }
 
     public UserBuilder setCardNumber(String cardNumber){
-        validate(isValidCardNumber(cardNumber), ErrorMessage.ERROR_CARD_NUMBER);
+        validate(isValidCardNumber(cardNumber), Error.CARD_NUMBER);
         this.cardNumber = cardNumber;
         return this;
     }
 
     public UserBuilder setCardExpiresDate(Date expiresDate){
-        validate(isValidExpireDate(expiresDate), ErrorMessage.ERROR_CARD_EXPIRES_DATE);
+        validate(isValidExpireDate(expiresDate), Error.CARD_EXPIRES_DATE);
         this.cardExpires = expiresDate;
         return this;
     }
 
     public UserBuilder setCVV2(int cvv2){
-        validate(isValidCVV2(cvv2), ErrorMessage.ERROR_CVV2);
+        validate(isValidCVV2(cvv2), Error.CVV2);
         this.cvv2 = cvv2;
         return this;
     }
 
 
     public UserBuilder setEmail(String email){
-        validate(isEmailValid(email), ErrorMessage.ERROR_EMAIL);
+        validate(isEmailValid(email), Error.EMAIL);
         this.email = email;
         return this;
     }
 
 
     public UserBuilder setFullName(String fullName){
-        validate(isFullNameValid(fullName), ErrorMessage.ERROR_FULL_NAME);
+        validate(isFullNameValid(fullName), Error.FULL_NAME);
         this.fullName = fullName;
         return this;
     }
 
     public UserBuilder setConfirmPassword(String confirmPassword){
-        validate(password.matches(confirmPassword), ErrorMessage.ERROR_PASSWORD_MATCHES);
+        validate(password.equals(Crypto.sha256(confirmPassword)), Error.PASSWORD_MATCHES);
         return this;
     }
 

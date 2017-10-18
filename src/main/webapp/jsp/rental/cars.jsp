@@ -1,4 +1,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: yuliia
@@ -27,6 +28,9 @@
             $('#queryForm').on('show.bs.modal', function (e) {
                 el2 = e.relatedTarget.parentNode.parentNode;
                 console.log(el2);
+
+                idEl = el2.getElementsByTagName('h1')[0].innerText;
+                document.getElementById("carID").value = idEl;
 
                 imgEl = el2.getElementsByTagName('img');
                 var $imgSrc = imgEl[0].src;
@@ -61,10 +65,10 @@
 
     <c:forEach items="${cars}" var="car" varStatus="rowCount">
 
-
         <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card car_item">
-            <img src="../../img/cars/${car.imgFile}.png" class="car_img">
+            <div class="card car_item " style="height: 70%">
+            <img src="../../img/cars/${car.imgFile}.jpg" class="car_img">
+                <h1 hidden>${car.id}</h1>
             <div class="card-body">
                 <h3 class="card-title text">${car.model}</h3>
                 <div class="row ">
@@ -111,15 +115,21 @@
                             <div class="card-body">
                                 <div class="row">
                                     <h5 class="col-lg-6">Car model:</h5>
-                                    <h5 class="col-lg-6 text-right" id="modelQueryForm">Range Rover</h5>
+                                    <h5 class="col-lg-6 text-right" id="modelQueryForm"></h5>
                                 </div>
                                 <div class="row">
                                     <h5 class="col-lg-6">Pick up</h5>
-                                    <h5 class="col-lg-6 text-right">20/04/2018</h5>
+                                    <h5 class="col-lg-6 text-right">
+                                        <fmt:formatDate pattern = "MM/dd/yyyy"
+                                                        value = "${term.pickUp}" />
+                                        </h5>
                                 </div>
                                 <div class="row">
                                     <h5 class="col-lg-6">Drop off</h5>
-                                    <h5 class="col-lg-6 text-right">26/04/2018</h5>
+                                    <h5 class="col-lg-6 text-right">
+                                        <fmt:formatDate pattern = "MM/dd/yyyy"
+                                                        value = "${term.dropOff}" />
+                                    </h5>
                                 </div>
                                 <div class="row">
                                     <h5 class="col-lg-6">Price per day</h5>
@@ -134,28 +144,28 @@
                     </div>
                     <div class="col-lg-6">
                         <div>
-                            <form data-toggle="validator">
+                            <form data-toggle="validator" method="post" action="/rental/NewOrder" id="newOrder" >
                                 <div class="form-group has-warning">
-                                    <label for="name" class="text-warning">Name:</label>
-                                    <input class="form-control" placeholder="Name" id="name"
-                                           required minlength="3" maxlength="50" >
+                                    <label for="name" class="text-warning">Full Name:</label>
+                                    <input class="form-control" placeholder="Full name" id="name"
+                                           required minlength="3" maxlength="50" name="full_name">
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group has-warning">
                                     <label for="email" class="text-warning">Email address:</label>
-                                    <input class="form-control " placeholder="E-mail" type="email" required
+                                    <input class="form-control " placeholder="E-mail" type="email" required name="email"
                                            id="email" pattern="(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)">
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group has-warning">
                                     <label for="passport" class="text-warning">Passport Number:</label>
-                                    <input class="form-control" placeholder="Passport No."
+                                    <input class="form-control" placeholder="Passport No." name="passport"
                                            id="passport" required minlength="5" maxlength="20">
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group has-warning">
                                     <label for="credit-number" class="text-warning">Credit card number:</label>
-                                    <input class="form-control" placeholder="Credit Card No."
+                                    <input class="form-control" placeholder="Credit Card No." name="card_number"
                                            id="credit-number" pattern="\d{16}" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
@@ -166,7 +176,7 @@
                                         </div>
                                         <div class="col-lg-5">
                                             <input class="form-control" placeholder="Expires" id="expires"
-                                                   required type="date">
+                                                   required type="date" name="card_expires">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="col-lg-2">
@@ -174,11 +184,11 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <input class="form-control" placeholder="CVV2" id="cvv2" type="password"
-                                                   required pattern="\d{3}">
+                                                   required pattern="\d{3}" name="cvv2">
                                         </div>
                                     </div>
                                 </div>
-
+                                <input hidden name="car_id" id="carID" type="hidden">
                                 <div class="form-group">
                                     <input class="btn btn-default btn-group-justified text" value="Submit" type="submit">
                                 </div>

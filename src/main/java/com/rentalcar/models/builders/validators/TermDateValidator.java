@@ -14,6 +14,8 @@ public interface TermDateValidator extends Validator {
      * @return true if dates are valid period of time
      */
     default boolean isDatesValid(Date pickUp, Date dropOff){
+        if(pickUp == null || dropOff == null)
+            return false;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         try {
             Date today = dateFormat.parse(dateFormat.format(new Date()));
